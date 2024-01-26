@@ -9,6 +9,7 @@ public class JokeController : MonoBehaviour
     public JokePiece jokePrefab;
 
     // Start is called before the first frame update
+    //TODO fix duplicate fakes
     void Start()
     {
         List<Joke> jokes = getAllJokes();
