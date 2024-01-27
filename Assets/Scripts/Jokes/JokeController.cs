@@ -66,14 +66,9 @@ public class JokeController : MonoBehaviour
     FullJoke spawnFullJoke() 
     {
         FullJoke joke = Instantiate(fullJokePrefab);
-        joke.setJokeText(getCompleteJoke());
+        joke.setJokeText(chosenJoke.fullJoke);
         joke.name = "Full Joke";
         return joke;
-    }
-
-    string getCompleteJoke()
-    {
-        return chosenJoke.jokeContent.Aggregate("", (prev, curr) => prev + " " + curr);
     }
 
     public List<JokePiece> spawnJokes()
@@ -86,7 +81,7 @@ public class JokeController : MonoBehaviour
     }
 
     List<JokePiece> createCorrectJokePieces(Joke chosenJoke) {
-        List<JokePiece> jokePieces = chosenJoke.jokeContent.Select(joke => {
+        List<JokePiece> jokePieces = chosenJoke.jokeKeywords.Select(joke => {
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Real Joke Compontent";
             jokePiece.setJokeText(joke);
@@ -116,7 +111,7 @@ public class JokeController : MonoBehaviour
 
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Fake Joke Compontent";
-            jokePiece.setJokeText(chosenJoke.jokeContent[Random.Range(0, chosenJoke.jokeContent.Length)]);
+            jokePiece.setJokeText(chosenJoke.jokeKeywords[Random.Range(0, chosenJoke.jokeKeywords.Length)]);
             jokePiece.setStartConnector(JokeConnector.GetRandomJokeConnector());
             jokePiece.setEndConnector(JokeConnector.GetRandomJokeConnector());
 
