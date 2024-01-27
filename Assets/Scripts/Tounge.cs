@@ -58,9 +58,11 @@ public class Tounge : MonoBehaviour
                 toungeLine.SetPosition(0, toungeOrigin.position);
                 toungeLine.SetPosition(1, hit.transform.position);
 
-                if (hit.transform.TryGetComponent(out MovingObject throwObjects))
+                MovingObject throwObjects = hit.transform.GetComponent<MovingObject>();
+                if (throwObjects)
                 {
-                    throwObjects.ReverseDir();
+                    Debug.Log("Hit Moving Object");
+                    throwObjects.Deactivate();
                     throwObjects.transform.SetParent(toungeEnd.transform);
                     throwObjects.transform.localPosition = Vector3.zero;
                 }

@@ -23,6 +23,7 @@ public class MovingObject : MonoBehaviour
     // Activate Object Movement
     public void Activate(Vector3 position, float speed, float curveHeight)
     {
+        active = true;  
         startPosition = transform.position;
         this.endPosition = position;
         this.speed = speed;
@@ -71,8 +72,10 @@ public class MovingObject : MonoBehaviour
                 break;
             case "Throwable":
                 break;
+            case "Tongue":
+                break;
             default:
-                Destroy(gameObject);
+                //Destroy(gameObject);
                 break;
         }
         Debug.Log(gameObject.name + " Hit: " + other.name);
@@ -93,7 +96,11 @@ public class MovingObject : MonoBehaviour
 
 
             transform.position = CalculatePointOnCurve(t);
+            if (!active)
+                yield return null;
             yield return new WaitForFixedUpdate();
+
+
         }
 
         transform.position = endPosition;
