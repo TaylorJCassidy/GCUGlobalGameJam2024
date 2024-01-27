@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 231047965}
   m_Layer: 0
   m_Name: tongueEnd
-  m_TagString: Tongue
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -693,6 +693,9 @@ MonoBehaviour:
   possibleThrownObjects:
   - {fileID: 7016115151282790727, guid: 4419b37882029bd488678b927999718f, type: 3}
   offset: 0.1
+  throwSpeed: 0.8
+  rotationModifier: 0
+  curveHeight: 0
 --- !u!4 &955172272
 Transform:
   m_ObjectHideFlags: 0

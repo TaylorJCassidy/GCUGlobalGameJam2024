@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5684838840574144929}
   - component: {fileID: -8689220934707041863}
   - component: {fileID: 8011473417139715646}
+  - component: {fileID: 9173659148509570210}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Throwable
@@ -237,3 +238,15 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &9173659148509570210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374145889403659631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c266020493129f54886242efc627b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

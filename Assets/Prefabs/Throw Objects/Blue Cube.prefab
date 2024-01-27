@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5149954033507604804}
   - component: {fileID: 2089755450073083179}
   - component: {fileID: -3679222862345601870}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Blue Cube
   m_TagString: Throwable
   m_Icon: {fileID: 0}
