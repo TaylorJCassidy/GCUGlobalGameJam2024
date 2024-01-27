@@ -39,7 +39,7 @@ public class ThrowObjects : MonoBehaviour
         // Throw object in direction
         Vector3 dir = Vector3.Normalize(randomPos - newObj.transform.position);
         MovingObject objScript = newObj.AddComponent<MovingObject>();
-        objScript.Activate(dir, 1.0f);
+        objScript.Activate(dir, 0.5f);
     }
 
 

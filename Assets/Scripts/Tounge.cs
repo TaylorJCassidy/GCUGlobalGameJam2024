@@ -7,7 +7,7 @@ public class Tounge : MonoBehaviour
 
     [SerializeField] private Transform toungeOrigin;
 
-    private Transform toungeEnd;
+    [SerializeField] private Transform toungeEnd;
 
     [SerializeField] private LineRenderer toungeLine;
 
@@ -22,6 +22,8 @@ public class Tounge : MonoBehaviour
 
     void Start()
     {
+        toungeLine.SetPosition(0, toungeOrigin.position);
+        toungeLine.SetPosition(1, toungeOrigin.position);
         // This is how far away from the Camera the plane is placed
         m_DistanceFromCamera = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z - m_DistanceZ);
 
@@ -40,26 +42,37 @@ public class Tounge : MonoBehaviour
 
     private void ShootTounge()
     {
-        canShoot = false;
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         // If we want to use a plane for general clicking
         float enter = 0.0f;
         // Snap to thrown object
+        Debug.Log(LayerMask.LayerToName(20));
         if (Physics.Raycast(r, out hit))
         {
-            Debug.Log("Hit Object");
-            toungeLine.SetPosition(0, toungeOrigin.position);
-            toungeLine.SetPosition(1, hit.transform.position);
+            if (hit.transform.gameObject.layer == 20)
+            {
+                canShoot = false;
+                Debug.Log("Hit Object");
+                toungeLine.SetPosition(0, toungeOrigin.position);
+                toungeLine.SetPosition(1, hit.transform.position);
 
-            StartCoroutine(ToungeDraw());
+                if (hit.transform.TryGetComponent(out MovingObject throwObjects))
+                {
+                    throwObjects.ReverseDir();
+                }
+                StartCoroutine(ToungeDraw());
 
-            StartCoroutine(ToungeReset(hit));
+                StartCoroutine(ToungeReset());
+                return;
+            }
 
         }
-       else if (m_Plane.Raycast(r, out enter))
+
+        if (m_Plane.Raycast(r, out enter))
         {
+            canShoot = false;
             Debug.Log("Hit Plane");
             //Get the point that is clicked
             Vector3 hitPoint = r.GetPoint(enter);
@@ -68,7 +81,7 @@ public class Tounge : MonoBehaviour
             toungeLine.SetPosition(1, hitPoint);
 
             StartCoroutine(ToungeDraw());
-            StartCoroutine(ToungeReset(hit));
+            StartCoroutine(ToungeReset());
 
         }
 
@@ -82,7 +95,7 @@ public class Tounge : MonoBehaviour
     IEnumerator ToungeDraw()
     {
         float t = 0;
-        float time = 0.5f;
+        float time = 0.25f;
 
         Vector3 orig = toungeLine.GetPosition(0);
         Vector3 orig2 = toungeLine.GetPosition(1);
@@ -94,6 +107,7 @@ public class Tounge : MonoBehaviour
         {
             newpos = Vector3.Lerp(orig, orig2, t / time);
             toungeLine.SetPosition(1, newpos);
+            toungeEnd.position = newpos;
             yield return null;
         }
         toungeLine.SetPosition(1, orig2);
@@ -104,7 +118,7 @@ public class Tounge : MonoBehaviour
     IEnumerator ToungeDrawBack()
     {
         float t = 0;
-        float time = 0.5f;
+        float time = 0.25f;
 
         Vector3 orig = toungeLine.GetPosition(0);
         Vector3 orig2 = toungeLine.GetPosition(1);
@@ -116,6 +130,7 @@ public class Tounge : MonoBehaviour
         {
             newpos = Vector3.Lerp(orig2, orig, t / time);
             toungeLine.SetPosition(1, newpos);
+            toungeEnd.position = newpos;
             yield return null;
         }
         toungeLine.SetPosition(1, orig);
@@ -123,9 +138,9 @@ public class Tounge : MonoBehaviour
         yield break;
     }
 
-    IEnumerator ToungeReset(RaycastHit hit)
+    IEnumerator ToungeReset()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         toungeLine.SetPosition(0, toungeOrigin.position);
         StartCoroutine(ToungeDrawBack());
         yield break;

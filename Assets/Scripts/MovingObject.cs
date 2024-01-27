@@ -19,6 +19,15 @@ public class MovingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        if (other.gameObject.CompareTag("Tongue"))
+        {
+           ReverseDir();
+        }
+        else Destroy(gameObject);
+    }
+
+    public void ReverseDir()
+    {
+        dir = -dir;
     }
 }
