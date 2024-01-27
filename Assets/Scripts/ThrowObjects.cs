@@ -12,6 +12,14 @@ public class ThrowObjects : MonoBehaviour
     [Range(0f, .5f)]
     float offset;
 
+    [SerializeField]
+    [Range(0.1f, 20.0f)]
+    float throwSpeed;
+
+    [SerializeField]
+    [Range(1.0f, 30.0f)]
+    float curveHeight;
+
     private void Awake()
     {
         // Error Checking
@@ -37,9 +45,16 @@ public class ThrowObjects : MonoBehaviour
         GameObject newObj = Instantiate(PickRandomObject(), Camera.main.transform.position - Camera.main.transform.forward, Quaternion.identity, null);
 
         // Throw object in direction
-        Vector3 dir = Vector3.Normalize(randomPos - newObj.transform.position);
+        Vector3 dir = randomPos;
         MovingObject objScript = newObj.AddComponent<MovingObject>();
-        objScript.Activate(dir, 0.5f);
+        objScript.Activate(dir, throwSpeed, curveHeight);
+
+        // Random Rotation Speed
+        float speedModifier = Random.Range(40.0f, 80.0f);
+        if (Random.Range(0, 10) < 5) speedModifier *= -1;
+
+        newObj.GetComponent<Rigidbody>().AddTorque(speedModifier * new Vector3(4.0f, 4.0f, 4.0f) * (throwSpeed));
+
     }
 
 
@@ -57,7 +72,7 @@ public class ThrowObjects : MonoBehaviour
         // Generate a random position within the viewport bounds
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
-        float randomZ = 10.0f;
+        float randomZ = 30.0f;
 
         // Convert screen coordinates to world coordinates
         Vector3 randomPosition = camera.ScreenToWorldPoint(new Vector3(randomX, randomY, randomZ));

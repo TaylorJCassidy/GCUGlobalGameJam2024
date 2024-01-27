@@ -1,35 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class MovingObject : MonoBehaviour
 {
-    Vector3 dir = Vector3.zero;
-    public float speed = 1.0f;
-    public void Activate(Vector3 dir, float speed)
+    // Setup Values
+    Vector3 startPosition;
+    Vector3 middlePosition;
+    Vector3 endPosition = Vector3.negativeInfinity;
+    float speed;
+    bool active = false;
+    
+    // In case we want to end object movement
+    public void Deactivate()
     {
-        this.dir = dir;
-        this.speed = speed;
+        active = false;
     }
+
+    // Activate Object Movement
+    public void Activate(Vector3 position, float speed, float curveHeight)
+    {
+        startPosition = transform.position;
+        this.endPosition = position;
+        this.speed = speed;
+
+        middlePosition = endPosition - startPosition + (Vector3.up * curveHeight);
+
+        StartCoroutine(MoveTo());
+    }
+
     private void FixedUpdate()
     {
-        if (dir == Vector3.zero)
+        // Not Active
+        if (!active)
             return;
-        transform.position += dir * speed;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Tongue"))
+        switch (other.tag)
         {
-           ReverseDir();
+            case "Player":
+                // Damage Player
+                break;
+            default:
+                break;
         }
-        else Destroy(gameObject);
+        Debug.Log(gameObject.name + " Hit: " + other.name);
+        Destroy(gameObject);
     }
 
-    public void ReverseDir()
+    IEnumerator MoveTo()
     {
-        //dir = -dir;
-       dir = Vector3.zero;
-       GetComponent<Rigidbody>().isKinematic = true;
+        float time = 1 / speed;
+        for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
+        {
+            Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
+            float t = currTime / time;
+            float y0 = Mathf.Lerp(startPosition.y, middlePosition.y, t);
+            float y1 = Mathf.Lerp(middlePosition.y, endPosition.y, t);
+            float y2 = Mathf.Lerp(y0, y1, t);
+
+            Vector3 currPosition = Vector3.Lerp(startPosition, endPosition, t);
+            currPosition.y = y2;
+
+            transform.position = currPosition;
+            yield return new WaitForFixedUpdate();
+        }
+
+        transform.position = endPosition;
     }
 }
