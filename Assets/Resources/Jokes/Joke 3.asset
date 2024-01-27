@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
   m_Name: Joke 3
   m_EditorClassIdentifier: 
-  fullJoke: a joke containing a keyword
+  fullJoke: What do frogs do with paper? Rip-it, Rip-it.
   jokeKeywords:
-  - joke
-  - key
-  - word
+  - Frogs
+  - Paper
+  - Rip-it

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
-  m_Name: Joke 1
+  m_Name: Joke 7
   m_EditorClassIdentifier: 
-  fullJoke: How do frogs share secrets? Through Morse Toad.
+  fullJoke: What is green and loud? A froghorn
   jokeKeywords:
-  - Frogs
-  - Secrets
-  - Morse Toad
+  - Green
+  - Loud
+  - Froghorn

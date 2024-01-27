@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
-  m_Name: Joke 1
+  m_Name: Joke 9
   m_EditorClassIdentifier: 
-  fullJoke: How do frogs share secrets? Through Morse Toad.
+  fullJoke: What do you call a frog with no hind legs? Unhoppy
   jokeKeywords:
-  - Frogs
-  - Secrets
-  - Morse Toad
+  - Frog
+  - No legs
+  - Unhoppy
