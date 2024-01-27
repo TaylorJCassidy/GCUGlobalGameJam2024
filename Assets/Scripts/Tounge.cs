@@ -144,6 +144,9 @@ public class Tounge : MonoBehaviour
 
     IEnumerator ToungeHitObject(RaycastHit hit)
     {
+        Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
+        if (rb != null) rb.isKinematic = true;
+
         yield return new WaitForSeconds(toungeShootOutSpeed);
 
         MovingObject throwObjects = hit.transform.GetComponent<MovingObject>();
