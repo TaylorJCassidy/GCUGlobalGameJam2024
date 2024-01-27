@@ -15,6 +15,10 @@ public class ThrowObjects : MonoBehaviour
     [SerializeField]
     [Range(0.1f, 20.0f)]
     float throwSpeed;
+    
+    [SerializeField]
+    [Range(2.0f, 10.0f)]
+    float rotationModifier;
 
     [SerializeField]
     [Range(1.0f, 30.0f)]
@@ -36,6 +40,14 @@ public class ThrowObjects : MonoBehaviour
     }
     GameObject PickRandomObject() { return possibleThrownObjects[Random.Range(0, possibleThrownObjects.Length)]; }
 
+    // Throw Multiple Objects
+    void ThrowObject(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ThrowObject();
+        }
+    }
     void ThrowObject()
     {
         // Get Camera Corner Positions
@@ -53,8 +65,7 @@ public class ThrowObjects : MonoBehaviour
         float speedModifier = Random.Range(40.0f, 80.0f);
         if (Random.Range(0, 10) < 5) speedModifier *= -1;
 
-        newObj.GetComponent<Rigidbody>().AddTorque(speedModifier * new Vector3(4.0f, 4.0f, 4.0f) * (throwSpeed));
-
+        newObj.GetComponent<Rigidbody>().AddTorque(speedModifier * new Vector3(rotationModifier, rotationModifier, rotationModifier) * (throwSpeed));
     }
 
 
@@ -68,7 +79,7 @@ public class ThrowObjects : MonoBehaviour
         float maxX = Screen.width * (viewportRect.x + viewportRect.width - offset);
         float minY = Screen.height * (viewportRect.y + offset);
         float maxY = Screen.height * (viewportRect.y + viewportRect.height - offset);
-        Debug.Log(minX + " " + maxX);
+        
         // Generate a random position within the viewport bounds
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);

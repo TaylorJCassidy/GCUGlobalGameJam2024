@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Net;
+using UnityEditor;
 using UnityEngine;
 
 public class MovingObject : MonoBehaviour
@@ -29,7 +31,31 @@ public class MovingObject : MonoBehaviour
 
         StartCoroutine(MoveTo());
     }
+    private void Update()
+    {
+        DrawBezierCurve(.0001f);
+    }
+    void DrawBezierCurve(float resolution)
+    {
+        int numPoints = Mathf.CeilToInt(1f / resolution);
+        GetComponent<LineRenderer>().positionCount = numPoints;
+        for (int i = 0; i < numPoints; i++)
+        {
+            float t = i * resolution;
+            Vector3 point = CalculatePointOnCurve(t);
+            GetComponent<LineRenderer>().SetPosition(i, point);
+        }
+    }
+    Vector3 CalculatePointOnCurve(float t)
+    {
+        float y0 = Mathf.Lerp(startPosition.y, middlePosition.y, t);
+        float y1 = Mathf.Lerp(middlePosition.y, endPosition.y, t);
+        float y2 = Mathf.Lerp(y0, y1, t);
 
+        Vector3 currPosition = Vector3.Lerp(startPosition, endPosition, t);
+        currPosition.y = y2;
+        return currPosition;
+    }
     private void FixedUpdate()
     {
         // Not Active
@@ -43,28 +69,30 @@ public class MovingObject : MonoBehaviour
             case "Player":
                 // Damage Player
                 break;
+            case "Throwable":
+                break;
             default:
+                Destroy(gameObject);
                 break;
         }
         Debug.Log(gameObject.name + " Hit: " + other.name);
-        Destroy(gameObject);
     }
 
     IEnumerator MoveTo()
     {
+        GameObject landingPos = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        landingPos.transform.position = endPosition;
+
         float time = 1 / speed;
+        Destroy(landingPos, time);
+
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
             Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
             float t = currTime / time;
-            float y0 = Mathf.Lerp(startPosition.y, middlePosition.y, t);
-            float y1 = Mathf.Lerp(middlePosition.y, endPosition.y, t);
-            float y2 = Mathf.Lerp(y0, y1, t);
 
-            Vector3 currPosition = Vector3.Lerp(startPosition, endPosition, t);
-            currPosition.y = y2;
 
-            transform.position = currPosition;
+            transform.position = CalculatePointOnCurve(t);
             yield return new WaitForFixedUpdate();
         }
 
