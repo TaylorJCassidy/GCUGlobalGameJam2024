@@ -27,8 +27,15 @@ public class JokeController : MonoBehaviour
 
     public bool addSelectedJoke(JokePiece jokePiece)
     {
-        if (selectedJokePieces.Count == 0 || selectedJokePieces[selectedJokePieces.Count - 1].getEndConnector().Equals(jokePiece.getStartConnector())) {
+        if (selectedJokePieces.Count == 0 ) {
             selectedJokePieces.Add(jokePiece);
+            return true;
+        }
+
+        JokePiece previousPiece = selectedJokePieces[selectedJokePieces.Count - 1];
+        if (previousPiece.getEndConnector().Equals(jokePiece.getStartConnector())) {
+            selectedJokePieces.Add(jokePiece);
+            previousPiece.connect(jokePiece);
             return true;
         }
         return false;
@@ -39,6 +46,7 @@ public class JokeController : MonoBehaviour
         JokePiece lastPiece = selectedJokePieces[selectedJokePieces.Count - 1];
         if (jokePiece == lastPiece) {
             selectedJokePieces.Remove(lastPiece);
+            if (selectedJokePieces.Count != 0) selectedJokePieces[selectedJokePieces.Count - 1].disconnect();
             return true;
         }
         return false;
