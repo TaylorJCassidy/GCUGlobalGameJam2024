@@ -67,8 +67,10 @@ public class MovingObject : MonoBehaviour
         if (!active)
             return;
     }
+
+
     private void OnTriggerEnter(Collider other)
-    {
+    {     
         switch (other.tag)
         {
             case "Player":
@@ -88,12 +90,7 @@ public class MovingObject : MonoBehaviour
 
     IEnumerator MoveTo()
     {
-        GameObject landingPos = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        landingPos.transform.position = endPosition;
-
         float time = 1 / speed;
-        Destroy(landingPos, time);
-
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
             if (!active) yield break;
