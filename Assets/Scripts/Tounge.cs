@@ -19,6 +19,9 @@ public class Tounge : MonoBehaviour
 
     bool canShoot = true;
 
+    [SerializeField] private float toungeShootOutSpeed = 0.25f;
+    [SerializeField] private float toungeRetractSpeed = 0.25f;
+
 
     void Start()
     {
@@ -58,15 +61,8 @@ public class Tounge : MonoBehaviour
                 toungeLine.SetPosition(0, toungeOrigin.position);
                 toungeLine.SetPosition(1, hit.transform.position);
 
-                MovingObject throwObjects = hit.transform.GetComponent<MovingObject>();
-                if (throwObjects)
-                {
-                    Debug.Log("Hit Moving Object");
-                    throwObjects.Deactivate();
-                    throwObjects.transform.SetParent(toungeEnd.transform);
-                    throwObjects.transform.localPosition = Vector3.zero;
-                }
                 StartCoroutine(ToungeDraw());
+                StartCoroutine(ToungeHitObject(hit));
 
                 StartCoroutine(ToungeReset());
                 return;
@@ -99,7 +95,7 @@ public class Tounge : MonoBehaviour
     IEnumerator ToungeDraw()
     {
         float t = 0;
-        float time = 0.25f;
+        float time = toungeShootOutSpeed;
 
         Vector3 orig = toungeLine.GetPosition(0);
         Vector3 orig2 = toungeLine.GetPosition(1);
@@ -122,7 +118,7 @@ public class Tounge : MonoBehaviour
     IEnumerator ToungeDrawBack()
     {
         float t = 0;
-        float time = 0.25f;
+        float time = toungeRetractSpeed;
 
         Vector3 orig = toungeLine.GetPosition(0);
         Vector3 orig2 = toungeLine.GetPosition(1);
@@ -146,9 +142,25 @@ public class Tounge : MonoBehaviour
         yield break;
     }
 
+    IEnumerator ToungeHitObject(RaycastHit hit)
+    {
+        yield return new WaitForSeconds(toungeShootOutSpeed);
+
+        MovingObject throwObjects = hit.transform.GetComponent<MovingObject>();
+        if (throwObjects)
+        {
+            Debug.Log("Hit Moving Object");
+            throwObjects.Deactivate();
+            throwObjects.transform.SetParent(toungeEnd.transform);
+            throwObjects.transform.localPosition = Vector3.zero;
+        }
+
+        yield break;
+    }
     IEnumerator ToungeReset()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(toungeShootOutSpeed);
+
         toungeLine.SetPosition(0, toungeOrigin.position);
         StartCoroutine(ToungeDrawBack());
         yield break;
@@ -159,5 +171,10 @@ public class Tounge : MonoBehaviour
         //draw plane
         Plane p = new Plane(Vector3.forward, m_DistanceFromCamera);
         Gizmos.DrawWireCube(p.ClosestPointOnPlane(transform.position), new Vector3(10, 10, 0.1f));
+    }
+
+    public void SetActive(bool b)
+    {
+        canShoot = b;
     }
 }

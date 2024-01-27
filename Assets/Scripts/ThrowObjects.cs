@@ -58,7 +58,7 @@ public class ThrowObjects : MonoBehaviour
 
         // Throw object in direction
         Vector3 dir = randomPos;
-        MovingObject objScript = newObj.AddComponent<MovingObject>();
+        MovingObject objScript = newObj.GetComponent<MovingObject>();
         objScript.Activate(dir, throwSpeed, curveHeight);
 
         // Random Rotation Speed

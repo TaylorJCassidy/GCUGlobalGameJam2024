@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c430e34b94d80b14c97fb6db5b052e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftoverCount: 2
   jokePrefab: {fileID: 7311648565094244170, guid: c57c1b8c202d31e458390d04cfe16c08, type: 3}
+  fullJokePrefab: {fileID: -4083908458599216323, guid: b852e4c067b707147aefa8ef92391b68, type: 3}

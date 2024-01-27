@@ -42,6 +42,19 @@ public class JokePiece : MonoBehaviour
         transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = jokeText;
     }
 
+    public void connect(JokePiece jokePiece) {
+        GameObject endConnector = transform.GetChild(1).gameObject;
+        Vector3[] positions = {
+            endConnector.transform.position + new Vector3(0f, 0f, 1f), 
+            jokePiece.transform.GetChild(0).transform.position + new Vector3(0f, 0f, 1f)
+        };
+        endConnector.GetComponent<LineRenderer>().SetPositions(positions);
+    }
+
+    public void disconnect() {
+        transform.GetChild(1).gameObject.GetComponent<LineRenderer>().SetPositions(new Vector3[]{Vector3.zero, Vector3.zero});
+    }
+
     void OnMouseDown()
     {
         JokeController jokeController = JokeController.GetJokeController();
