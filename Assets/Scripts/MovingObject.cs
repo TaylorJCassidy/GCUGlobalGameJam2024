@@ -75,7 +75,7 @@ public class MovingObject : MonoBehaviour
             case "Tongue":
                 break;
             default:
-                //Destroy(gameObject);
+                Destroy(gameObject);
                 break;
         }
         Debug.Log(gameObject.name + " Hit: " + other.name);
@@ -91,15 +91,13 @@ public class MovingObject : MonoBehaviour
 
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
+            if (!active) yield break;
+
             Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
             float t = currTime / time;
 
-
-            transform.position = CalculatePointOnCurve(t);
-            if (!active)
-                yield return null;
+            transform.position = CalculatePointOnCurve(t);      
             yield return new WaitForFixedUpdate();
-
 
         }
 
