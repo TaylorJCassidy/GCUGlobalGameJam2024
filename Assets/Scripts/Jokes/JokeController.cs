@@ -7,13 +7,13 @@ public class JokeController : MonoBehaviour
     public int leftoverCount = 2;
     public JokePiece jokePrefab;
 
+    private List<Joke> jokes;
+
     // Start is called before the first frame update
     void Start()
     {
-        List<Joke> jokes = getAllJokes();
-        Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
-        createCorrectJokePieces(chosenJoke);
-        createOtherRandomJokePieces(jokes.Where(joke => joke != chosenJoke).ToList());
+        jokes = getAllJokes();
+        spawnJokes();
     }
 
     List<Joke> getAllJokes()
@@ -21,7 +21,15 @@ public class JokeController : MonoBehaviour
         return Resources.LoadAll<Joke>("Jokes").ToList();
     }
 
-    void createCorrectJokePieces(Joke chosenJoke) {
+    public List<JokePiece> spawnJokes() 
+    {
+        Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
+        List<JokePiece> jokePieces = createCorrectJokePieces(chosenJoke);
+        jokePieces.AddRange(createOtherRandomJokePieces(jokes.Where(joke => joke != chosenJoke).ToList()));
+        return jokePieces;
+    }
+
+    List<JokePiece> createCorrectJokePieces(Joke chosenJoke) {
         List<JokePiece> jokePieces = chosenJoke.jokeContent.Select(joke => {
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Real Joke Compontent";
@@ -38,12 +46,15 @@ public class JokeController : MonoBehaviour
             jokePieces[i].setEndConnector(sharedConnector);
             jokePieces[i + 1].setStartConnector(sharedConnector);
         }
+        
+        return jokePieces;
     }
 
-    void createOtherRandomJokePieces(List<Joke> jokes) {
+    List<JokePiece> createOtherRandomJokePieces(List<Joke> jokes) {
         if (jokes.Count < leftoverCount) throw new System.Exception("Leftover count must be greater than the number of jokes + 1");
-        int i = 0;
-        do {
+
+        List<JokePiece> jokePieces = new(leftoverCount);
+        for (int i = 0; i < leftoverCount; i++) {
             Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
             Debug.Log(chosenJoke);
             jokes.Remove(chosenJoke);
@@ -53,9 +64,9 @@ public class JokeController : MonoBehaviour
             jokePiece.setJokeText(chosenJoke.jokeContent[Random.Range(0, chosenJoke.jokeContent.Length)]);
             jokePiece.setStartConnector(JokeConnector.GetRandomJokeConnector());
             jokePiece.setEndConnector(JokeConnector.GetRandomJokeConnector());
+
+            jokePieces.Add(jokePiece);
         }
-        while (++i < leftoverCount);
+        return jokePieces;
     }
-
-
 }
