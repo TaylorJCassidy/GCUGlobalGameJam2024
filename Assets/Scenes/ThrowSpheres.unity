@@ -618,7 +618,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -734,6 +734,9 @@ MonoBehaviour:
   - {fileID: 7016115151282790727, guid: 4419b37882029bd488678b927999718f, type: 3}
   - {fileID: 7687416723493156598, guid: 28b6a5d3a311e15499c30afff22bc2c8, type: 3}
   offset: 0.1
+  throwSpeed: 0.75
+  rotationModifier: 4
+  curveHeight: 20
 --- !u!4 &1653670387
 Transform:
   m_ObjectHideFlags: 0
