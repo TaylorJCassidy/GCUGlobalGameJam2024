@@ -9,7 +9,7 @@ public class JokeController : MonoBehaviour
 
     private List<Joke> jokes;
     private List<JokePiece> correctJokePieces = new();
-    public List<JokePiece> selectedJokePieces = new();
+    private List<JokePiece> selectedJokePieces = new();
 
     private static JokeController jokeController;
 
