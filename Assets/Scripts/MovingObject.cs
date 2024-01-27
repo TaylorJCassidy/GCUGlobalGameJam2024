@@ -28,6 +28,8 @@ public class MovingObject : MonoBehaviour
 
     public void ReverseDir()
     {
-        dir = -dir;
+        //dir = -dir;
+       dir = Vector3.zero;
+       GetComponent<Rigidbody>().isKinematic = true;
     }
 }

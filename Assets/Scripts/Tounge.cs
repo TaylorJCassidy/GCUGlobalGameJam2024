@@ -61,6 +61,8 @@ public class Tounge : MonoBehaviour
                 if (hit.transform.TryGetComponent(out MovingObject throwObjects))
                 {
                     throwObjects.ReverseDir();
+                    throwObjects.transform.SetParent(toungeEnd.transform);
+                    throwObjects.transform.localPosition = Vector3.zero;
                 }
                 StartCoroutine(ToungeDraw());
 
@@ -134,6 +136,10 @@ public class Tounge : MonoBehaviour
             yield return null;
         }
         toungeLine.SetPosition(1, orig);
+        if (toungeEnd.childCount > 0)
+        {
+            Destroy(toungeEnd.GetChild(0).gameObject);
+        }
         canShoot = true;
         yield break;
     }
