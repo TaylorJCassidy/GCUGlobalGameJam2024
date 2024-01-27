@@ -24,8 +24,6 @@ public class JokeController : MonoBehaviour
     {
         jokeController = this;
         jokes = getAllJokes();
-        spawnJokes();
-        spawnFullJoke();
     }
 
     public bool addSelectedJoke(JokePiece jokePiece)
