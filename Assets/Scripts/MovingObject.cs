@@ -69,8 +69,6 @@ public class MovingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(Instantiate(vfx, transform.position, Quaternion.identity, null), 2.0f);
-
         switch (other.tag)
         {
             case "Player":
@@ -81,6 +79,7 @@ public class MovingObject : MonoBehaviour
             case "Tongue":
                 break;
             default:
+                Destroy(Instantiate(vfx, transform.position, Quaternion.identity, null), 2.0f);
                 Destroy(gameObject);
                 break;
         }
