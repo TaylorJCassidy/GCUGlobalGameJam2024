@@ -10,4 +10,8 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene("Main Scene");
     }
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
