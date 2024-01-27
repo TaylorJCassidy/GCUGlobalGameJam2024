@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class JokePiece : MonoBehaviour
@@ -8,6 +9,7 @@ public class JokePiece : MonoBehaviour
     private string jokeText;
 
     private Sprite[] sprites;
+    private bool selected = false;
 
     public void Awake() 
     {
@@ -26,9 +28,28 @@ public class JokePiece : MonoBehaviour
         transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprites[jokeConnector.spriteIndex];
     }
 
+    public JokeConnector getStartConnector() {
+        return startConnector;
+    }
+
+    public JokeConnector getEndConnector() {
+        return endConnector;
+    }
+
     public void setJokeText(string jokeText) 
     {
         this.jokeText = jokeText;
-        transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = jokeText;
+        transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = jokeText;
+    }
+
+    void OnMouseDown()
+    {
+        JokeController jokeController = JokeController.GetJokeController();
+        if (selected) {
+            if (jokeController.removeSelectedJoke(this)) selected = false;
+        }
+        else {
+            if (jokeController.addSelectedJoke(this)) selected = true;
+        }
     }
 }

@@ -8,12 +8,46 @@ public class JokeController : MonoBehaviour
     public JokePiece jokePrefab;
 
     private List<Joke> jokes;
+    private List<JokePiece> correctJokePieces = new();
+    public List<JokePiece> selectedJokePieces = new();
+
+    private static JokeController jokeController;
+
+    public static JokeController GetJokeController() {
+        return jokeController;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        jokeController = this;
         jokes = getAllJokes();
         spawnJokes();
+    }
+
+    public bool addSelectedJoke(JokePiece jokePiece)
+    {
+        if (selectedJokePieces.Count == 0) {
+            selectedJokePieces.Add(jokePiece);
+            return true;
+        }
+
+        JokePiece previousPiece = selectedJokePieces[selectedJokePieces.Count - 1];
+        if (previousPiece.getEndConnector() == jokePiece.getStartConnector()) {
+            selectedJokePieces.Add(jokePiece);
+            return true;
+        }
+        return false;
+    }
+
+    public bool removeSelectedJoke(JokePiece jokePiece)
+    {
+        JokePiece lastPiece = selectedJokePieces[selectedJokePieces.Count - 1];
+        if (jokePiece == lastPiece) {
+            selectedJokePieces.Remove(lastPiece);
+            return true;
+        }
+        return false;
     }
 
     List<Joke> getAllJokes()
@@ -21,10 +55,16 @@ public class JokeController : MonoBehaviour
         return Resources.LoadAll<Joke>("Jokes").ToList();
     }
 
+    public bool isValidSelections() 
+    {
+        return selectedJokePieces.ToList() == correctJokePieces;
+    }
+
     public List<JokePiece> spawnJokes() 
     {
         Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
         List<JokePiece> jokePieces = createCorrectJokePieces(chosenJoke);
+        correctJokePieces.AddRange(jokePieces);
         jokePieces.AddRange(createOtherRandomJokePieces(jokes.Where(joke => joke != chosenJoke).ToList()));
         return jokePieces;
     }
@@ -56,7 +96,6 @@ public class JokeController : MonoBehaviour
         List<JokePiece> jokePieces = new(leftoverCount);
         for (int i = 0; i < leftoverCount; i++) {
             Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
-            Debug.Log(chosenJoke);
             jokes.Remove(chosenJoke);
 
             JokePiece jokePiece = Instantiate(jokePrefab);
