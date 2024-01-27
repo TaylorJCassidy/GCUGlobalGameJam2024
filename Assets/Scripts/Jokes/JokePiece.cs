@@ -46,10 +46,17 @@ public class JokePiece : MonoBehaviour
     {
         JokeController jokeController = JokeController.GetJokeController();
         if (selected) {
-            if (jokeController.removeSelectedJoke(this)) selected = false;
+            if (jokeController.removeSelectedJoke(this)) {
+                selected = false;
+                transform.GetChild(3).gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
         else {
-            if (jokeController.addSelectedJoke(this)) selected = true;
+            if (jokeController.addSelectedJoke(this)) {
+                selected = true;
+                transform.GetChild(3).gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
         }
+        
     }
 }
