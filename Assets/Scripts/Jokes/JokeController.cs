@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class JokeController : MonoBehaviour
@@ -9,7 +8,6 @@ public class JokeController : MonoBehaviour
     public JokePiece jokePrefab;
 
     // Start is called before the first frame update
-    //TODO fix duplicate fakes
     void Start()
     {
         List<Joke> jokes = getAllJokes();
@@ -27,39 +25,36 @@ public class JokeController : MonoBehaviour
         List<JokePiece> jokePieces = chosenJoke.jokeContent.Select(joke => {
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Real Joke Compontent";
-            jokePiece.jokeSection = joke;
+            jokePiece.setJokeText(joke);
             return jokePiece;
         }).ToList();
 
-        jokePieces[0].startColour = JokeColorFactory.GetRandomColor();
-        jokePieces[0].startShape = JokeShapeFactory.GetRandomShape();
-
-        jokePieces[jokePieces.Count - 1].endColour = JokeColorFactory.GetRandomColor();
-        jokePieces[jokePieces.Count - 1].endShape = JokeShapeFactory.GetRandomShape();
+        jokePieces[0].setStartConnector(JokeConnector.GetRandomJokeConnector());
+        jokePieces[jokePieces.Count - 1].setEndConnector(JokeConnector.GetRandomJokeConnector());
 
         for (int i = 0; i < jokePieces.Count - 1; i++) {
-            Color sharedColour = JokeColorFactory.GetRandomColor();
-            JokeShape sharedShape = JokeShapeFactory.GetRandomShape();
+            JokeConnector sharedConnector = JokeConnector.GetRandomJokeConnector();
 
-            jokePieces[i].endColour = sharedColour;
-            jokePieces[i].endShape = sharedShape;
-
-            jokePieces[i + 1].startColour = sharedColour;
-            jokePieces[i + 1].startShape = sharedShape;
+            jokePieces[i].setEndConnector(sharedConnector);
+            jokePieces[i + 1].setStartConnector(sharedConnector);
         }
     }
 
     void createOtherRandomJokePieces(List<Joke> jokes) {
-        for (int i = 0; i < leftoverCount; i++) {
+        if (jokes.Count < leftoverCount) throw new System.Exception("Leftover count must be greater than the number of jokes + 1");
+        int i = 0;
+        do {
             Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
+            Debug.Log(chosenJoke);
+            jokes.Remove(chosenJoke);
+
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Fake Joke Compontent";
-            jokePiece.jokeSection = chosenJoke.jokeContent[Random.Range(0, chosenJoke.jokeContent.Length)];
-            jokePiece.startColour = JokeColorFactory.GetRandomColor();
-            jokePiece.endColour = JokeColorFactory.GetRandomColor();
-            jokePiece.startShape = JokeShapeFactory.GetRandomShape();
-            jokePiece.endShape = JokeShapeFactory.GetRandomShape();
+            jokePiece.setJokeText(chosenJoke.jokeContent[Random.Range(0, chosenJoke.jokeContent.Length)]);
+            jokePiece.setStartConnector(JokeConnector.GetRandomJokeConnector());
+            jokePiece.setEndConnector(JokeConnector.GetRandomJokeConnector());
         }
+        while (++i < leftoverCount);
     }
 
 
