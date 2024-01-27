@@ -6,8 +6,10 @@ public class JokeController : MonoBehaviour
 {
     public int leftoverCount = 2;
     public JokePiece jokePrefab;
+    public FullJoke fullJokePrefab;
 
     private List<Joke> jokes;
+    private Joke chosenJoke;
     private List<JokePiece> correctJokePieces = new();
     private List<JokePiece> selectedJokePieces = new();
 
@@ -23,6 +25,7 @@ public class JokeController : MonoBehaviour
         jokeController = this;
         jokes = getAllJokes();
         spawnJokes();
+        spawnFullJoke();
     }
 
     public bool addSelectedJoke(JokePiece jokePiece)
@@ -62,9 +65,22 @@ public class JokeController : MonoBehaviour
         return selectedJokePieces.SequenceEqual(correctJokePieces);
     }
 
-    public List<JokePiece> spawnJokes() 
+    FullJoke spawnFullJoke() 
     {
-        Joke chosenJoke = jokes[Random.Range(0, jokes.Count)];
+        FullJoke joke = Instantiate(fullJokePrefab);
+        joke.setJokeText(getCompleteJoke());
+        joke.name = "Full Joke";
+        return joke;
+    }
+
+    string getCompleteJoke()
+    {
+        return chosenJoke.jokeContent.Aggregate("", (prev, curr) => prev + " " + curr);
+    }
+
+    public List<JokePiece> spawnJokes()
+    {
+        chosenJoke = jokes[Random.Range(0, jokes.Count)];
         List<JokePiece> jokePieces = createCorrectJokePieces(chosenJoke);
         correctJokePieces.AddRange(jokePieces);
         jokePieces.AddRange(createOtherRandomJokePieces(jokes.Where(joke => joke != chosenJoke).ToList()));
