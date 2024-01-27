@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Net;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MovingObject : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class MovingObject : MonoBehaviour
     Vector3 endPosition = Vector3.negativeInfinity;
     float speed;
     bool active = false;
+
+    [SerializeField]
+    VisualEffect vfx;
     
     // In case we want to end object movement
     public void Deactivate()
@@ -23,7 +27,7 @@ public class MovingObject : MonoBehaviour
     // Activate Object Movement
     public void Activate(Vector3 position, float speed, float curveHeight)
     {
-        active = true;  
+        active = true;
         startPosition = transform.position;
         this.endPosition = position;
         this.speed = speed;
@@ -34,7 +38,7 @@ public class MovingObject : MonoBehaviour
     }
     private void Update()
     {
-        DrawBezierCurve(.0001f);
+        //DrawBezierCurve(.0001f);
     }
     void DrawBezierCurve(float resolution)
     {
@@ -65,6 +69,8 @@ public class MovingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Destroy(Instantiate(vfx, transform.position, Quaternion.identity, null), 2.0f);
+
         switch (other.tag)
         {
             case "Player":
@@ -75,7 +81,7 @@ public class MovingObject : MonoBehaviour
             case "Tongue":
                 break;
             default:
-                //Destroy(gameObject);
+                Destroy(gameObject);
                 break;
         }
         Debug.Log(gameObject.name + " Hit: " + other.name);
@@ -91,15 +97,13 @@ public class MovingObject : MonoBehaviour
 
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
+            if (!active) yield break;
+
             Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
             float t = currTime / time;
 
-
-            transform.position = CalculatePointOnCurve(t);
-            if (!active)
-                yield return null;
+            transform.position = CalculatePointOnCurve(t);      
             yield return new WaitForFixedUpdate();
-
 
         }
 

@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 231047965}
   m_Layer: 0
   m_Name: tongueEnd
-  m_TagString: Throwable
+  m_TagString: Tongue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 1322213657}
   m_Layer: 0
   m_Name: tempPlayer
-  m_TagString: Untagged
+  m_TagString: Tongue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1076,6 +1076,8 @@ MonoBehaviour:
   toungeEnd: {fileID: 231047964}
   toungeLine: {fileID: 1565632902}
   m_DistanceZ: -5
+  toungeShootOutSpeed: 0.25
+  toungeRetractSpeed: 0.25
 --- !u!1 &1570802573
 GameObject:
   m_ObjectHideFlags: 0
