@@ -78,8 +78,14 @@ public class GameManager : MonoBehaviour
         StartJokeSequence();
     }
 
+    [SerializeField]
+    GameObject dodgeUI;
+    [SerializeField]
+    GameObject catchUI; 
     void Update()
     {
+        dodgeUI.SetActive(false);
+        catchUI.SetActive(false);
         switch (gameState)
         {
             case GameState.Joke:
@@ -98,6 +104,8 @@ public class GameManager : MonoBehaviour
             case GameState.TellingJoke:
                 break;
             case GameState.Dodge:
+                dodgeUI.SetActive(true);
+                catchUI.SetActive(false);
                 timeLeft -= Time.deltaTime;
                 if (timeLeft <= 0)
                 {
@@ -106,6 +114,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Catch:
+                dodgeUI.SetActive(false);
+                catchUI.SetActive(true);
                 timeLeft -= Time.deltaTime;
                 if (timeLeft <= 0)
                 {
@@ -127,6 +137,7 @@ public class GameManager : MonoBehaviour
 #region Joke Sequence
     void StartJokeSequence()
     {
+        audioSource.PlayOneShot(audioClips[3]); //paper shuffle
         CameraController.cameraController.teleport(1);
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
@@ -188,6 +199,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator DelayedAudienceReaction()
     {
         CameraController.cameraController.teleport(2);
+        audioSource.PlayOneShot(audioClips[4]); //tell joke
+        yield return new WaitForSeconds(7.0f);
         if (isJokeValid)
         {
             // clap
