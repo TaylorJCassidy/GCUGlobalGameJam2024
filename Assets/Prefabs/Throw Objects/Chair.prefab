@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 5572313992903199045}
   m_Layer: 20
   m_Name: Chair
-  m_TagString: Throwable
+  m_TagString: DamagingThrowable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
