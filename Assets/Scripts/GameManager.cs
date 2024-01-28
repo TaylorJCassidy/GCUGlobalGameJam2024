@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,11 +86,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject dodgeUI;
     [SerializeField]
-    GameObject catchUI; 
+    GameObject catchUI;
+    [SerializeField]
+    GameObject heart1;
+    [SerializeField]
+    GameObject heart2;
+    [SerializeField]
+    GameObject heart3;
+    [SerializeField]
+    PlayerHealth health;
     void Update()
     {
         dodgeUI.SetActive(false);
         catchUI.SetActive(false);
+        heart1.SetActive(false); heart2.SetActive(false); heart3.SetActive(false);
+       
         switch (gameState)
         {
             case GameState.Joke:
@@ -108,6 +119,18 @@ public class GameManager : MonoBehaviour
             case GameState.TellingJoke:
                 break;
             case GameState.Dodge:
+                if (health.GetHealth() > 2)
+                {
+                    heart1.SetActive(true); heart2.SetActive(true); heart3.SetActive(true);
+                }
+                else if (health.GetHealth() > 1)
+                {
+                    heart1.SetActive(true); heart2.SetActive(true);
+                }
+                else if (health.GetHealth() > 0)
+                {
+                    heart1.SetActive(true);
+                }
                 dodgeUI.SetActive(true);
                 catchUI.SetActive(false);
                 timeLeft -= Time.deltaTime;

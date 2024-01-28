@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     private float maxHealth = 3f; // 3 lives
     private float health;
 
+    public float GetHealth() {  return health; }
     private void Start()
     {
         health = maxHealth;
