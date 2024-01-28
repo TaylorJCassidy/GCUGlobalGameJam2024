@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
         {
             // clap
             audienceMeter += 10f;
+            AddScore(40);
         }
         else
         {
@@ -241,9 +242,9 @@ public class GameManager : MonoBehaviour
         yield break;   
     }
 
-    public void AddScore()
+    public void AddScore(int score)
     {
-        score += 1;
+        this.score += score;
     }
 
     void EndGame()

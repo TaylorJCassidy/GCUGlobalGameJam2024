@@ -150,7 +150,7 @@ public class Tounge : MonoBehaviour
             throwObjects.transform.SetParent(toungeEnd.transform);
             throwObjects.transform.localPosition = Vector3.zero;
             
-            GameManager.instance.AddScore();
+            GameManager.instance.AddScore(10);
         }
 
         yield break;
