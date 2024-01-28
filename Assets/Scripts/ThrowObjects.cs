@@ -39,12 +39,6 @@ public class ThrowObjects : MonoBehaviour
         bounds = possiblePositions.bounds;
         possiblePositions.enabled = false;
     }
-    private void Update()
-    {
-        // Temp
-        if (Input.GetKeyDown(KeyCode.F))
-            ThrowGoodObject();
-    }
     GameObject PickRandomObject(GameObject[] gameObjects) { return gameObjects[Random.Range(0, gameObjects.Length)]; }
     public void ThrowBadObject()
     {

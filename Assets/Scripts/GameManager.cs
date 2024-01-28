@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     private bool isJokeValid = false;
 
+    [SerializeField] private Animator[] audienceAnimator;
+
     public enum GameState
     {
         Joke,
@@ -71,6 +73,8 @@ public class GameManager : MonoBehaviour
         audienceDisplay.value = audienceMeter;
 
         audioSource = GetComponent<AudioSource>();
+
+        audienceAnimator = GameObject.Find("Audience").GetComponentsInChildren<Animator>();
     }
 
     void Start()
@@ -78,8 +82,14 @@ public class GameManager : MonoBehaviour
         StartJokeSequence();
     }
 
+    [SerializeField]
+    GameObject dodgeUI;
+    [SerializeField]
+    GameObject catchUI; 
     void Update()
     {
+        dodgeUI.SetActive(false);
+        catchUI.SetActive(false);
         switch (gameState)
         {
             case GameState.Joke:
@@ -98,6 +108,8 @@ public class GameManager : MonoBehaviour
             case GameState.TellingJoke:
                 break;
             case GameState.Dodge:
+                dodgeUI.SetActive(true);
+                catchUI.SetActive(false);
                 timeLeft -= Time.deltaTime;
                 if (timeLeft <= 0)
                 {
@@ -106,6 +118,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Catch:
+                dodgeUI.SetActive(false);
+                catchUI.SetActive(true);
                 timeLeft -= Time.deltaTime;
                 if (timeLeft <= 0)
                 {
@@ -127,7 +141,12 @@ public class GameManager : MonoBehaviour
 #region Joke Sequence
     void StartJokeSequence()
     {
+        audioSource.PlayOneShot(audioClips[3]); //paper shuffle
         CameraController.cameraController.teleport(1);
+        foreach (Animator anim in audienceAnimator)
+        {
+            anim.SetBool("Clap", false);
+        }
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
         tongue.CanUse = false;
@@ -188,12 +207,18 @@ public class GameManager : MonoBehaviour
     private IEnumerator DelayedAudienceReaction()
     {
         CameraController.cameraController.teleport(2);
+        audioSource.PlayOneShot(audioClips[4]); //tell joke
+        yield return new WaitForSeconds(7.0f);
         if (isJokeValid)
         {
             // clap
             yield return new WaitForSeconds(punchLineTimer);
             audioSource.PlayOneShot(audioClips[2]); //drum
             yield return new WaitForSeconds(0.5f);
+            foreach (Animator anim in audienceAnimator)
+            {
+                anim.SetBool("Clap", true);
+            }
             audioSource.PlayOneShot(audioClips[1]); //clap
             audienceMeter += 10f;
             AddScore(40);
@@ -203,6 +228,10 @@ public class GameManager : MonoBehaviour
             // boo
             audioSource.PlayOneShot(audioClips[2]); //drum
             yield return new WaitForSeconds(0.5f);
+            foreach (Animator anim in audienceAnimator)
+            {
+                anim.SetBool("Clap", true);
+            }
             audioSource.PlayOneShot(audioClips[0]); //boo
             yield return new WaitForSeconds(1f);
             audienceMeter -= 40f;
