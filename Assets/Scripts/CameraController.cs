@@ -7,16 +7,14 @@ public class CameraController : MonoBehaviour
     public Vector3[] positions;
     public Vector3[] rotations;
     private ObjectTeleporter objectTeleporter;
+    public static CameraController cameraController;
 
     void Awake() {
+        cameraController = this;
         objectTeleporter = new ObjectTeleporter(positions, rotations, this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if (Input.GetButtonDown("Fire1")) { //TODO change button to change camera
-        //    objectTeleporter.Teleport(1);
-        // }
+    public void teleport(int idx) {
+        objectTeleporter.Teleport(idx);
     }
 }
