@@ -78,6 +78,10 @@ public class MovingObject : MonoBehaviour
                 break;
             case "Throwable":
                 break;
+            case "DamagingThrowable":
+                other.GetComponent<PlayerHealth>().TakeDamage(1);
+                Destroy(gameObject);
+                break;
             case "Tongue":
                 break;
             default:

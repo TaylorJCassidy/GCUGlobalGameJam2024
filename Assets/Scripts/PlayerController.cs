@@ -35,4 +35,11 @@ public class PlayerController : MonoBehaviour
         Vector3 lerpPos = Vector3.Lerp(transform.position, position, Time.deltaTime * speed);
         transform.position = lerpPos;
     }
+
+    public void Reset()
+    {
+        currentPosition = 1;
+        move(positions[currentPosition]);
+    }
+    
 }

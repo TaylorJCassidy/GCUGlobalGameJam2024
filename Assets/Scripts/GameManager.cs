@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
 
     private int score = 0;
+
     private float audienceMeter = 50f;
     private float timeLeft = 60f;
 
@@ -60,7 +61,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         playerMove.CanMove = false;
-        tongue.SetActive(false);
+        tongue.CanUse = false;
+        playerMove.Reset();
 
         timerDisplay.maxValue = timeForJoke;
         audienceDisplay.value = audienceMeter;
@@ -108,6 +110,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.End:
+                EndGame();
                 break;
         }
 
@@ -121,7 +124,8 @@ public class GameManager : MonoBehaviour
     {
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
-        tongue.SetActive(false);
+        tongue.CanUse = false;
+        playerMove.Reset();
 
         jokes = jokeController.spawnJokePieces();
 
@@ -221,7 +225,7 @@ public class GameManager : MonoBehaviour
     void StartCatchSequence()
     {
         timeLeft = timeForCatch;
-        tongue.SetActive(true); // Allow the player to use the tongue
+        tongue.CanUse = true;
         throwObjects.ThrowObject(); // Change to good objects only
         StartCoroutine(DelayedThrow());
     }
@@ -237,7 +241,7 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Throwing stopped");
-        tongue.SetActive(false);
+        tongue.CanUse = false;
         playerMove.CanMove = false;
         yield break;   
     }
@@ -247,9 +251,10 @@ public class GameManager : MonoBehaviour
         this.score += score;
     }
 
-    void EndGame()
+    public void EndGame()
     {
-
+        // Load Main Menu
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
 }
