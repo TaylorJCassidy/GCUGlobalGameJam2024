@@ -150,14 +150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cac7e7babc28154695c0e9d11f0e051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleThrownObjects:
-  - {fileID: 6374145889403659631, guid: fd58c1602fbf79b4bb91f73cbda894a2, type: 3}
-  - {fileID: 7569426850327079908, guid: ef091657d21d8e548b26771d1d0c52c7, type: 3}
-  - {fileID: 5797417491507995081, guid: f3fee27911cb2f3468563d529d7bdcc7, type: 3}
-  - {fileID: 5118829502683186792, guid: f83f42c1feabb744e914039021bb043d, type: 3}
-  - {fileID: 7016115151282790727, guid: 4419b37882029bd488678b927999718f, type: 3}
-  - {fileID: 7687416723493156598, guid: 28b6a5d3a311e15499c30afff22bc2c8, type: 3}
-  throwSpeed: 0.4
+  possibleBadThrownObjects:
+  - {fileID: 5118829502683186792, guid: e538efc1a4200ca429f7dd80c7955c07, type: 3}
+  - {fileID: 5118829502683186792, guid: 6eee8a1f1cdb5d34da4e1a6d8f647391, type: 3}
+  - {fileID: 5118829502683186792, guid: c5bfd98a51553f943b15c7726af31ea6, type: 3}
+  - {fileID: 5118829502683186792, guid: ad4044b987d58da43b6e8d60d3ada158, type: 3}
+  possibleGoodThrownObjects:
+  - {fileID: 4174246965675154974, guid: 61c3058601089d64ca7c0e7648e17e63, type: 3}
+  - {fileID: 5201374525831071009, guid: ad2dbcfd13b114a4c8c7b119f81a2b30, type: 3}
+  - {fileID: 4174246965675154974, guid: d0eab2e00d5bbf74d9c8c3466720269f, type: 3}
+  throwSpeed: 0.6
   rotationModifier: 4
   curveHeight: 7.5
   possiblePositions: {fileID: 121785351169154693}

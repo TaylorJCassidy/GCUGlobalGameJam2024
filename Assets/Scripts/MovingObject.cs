@@ -123,7 +123,9 @@ public class MovingObject : MonoBehaviour
         }
 
         transform.position = endPosition;
-
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+            rb.isKinematic = false; 
         falling = true;
         finalDirection = Vector3.Normalize(endPosition - CalculatePointOnCurve(0.9f));
     }

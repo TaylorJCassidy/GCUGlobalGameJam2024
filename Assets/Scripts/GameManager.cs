@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
     {
         timeLeft = timeForCatch;
         tongue.CanUse = true;
-        throwObjects.ThrowObject(); // Change to good objects only
+        throwObjects.ThrowGoodObject(); // Change to good objects only
         StartCoroutine(DelayedThrow());
     }
 
@@ -247,7 +247,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Waiting To throw");
             yield return new WaitForSeconds(throwDelay);
             Debug.Log("Throwing");
-            throwObjects.ThrowObject();
+            if (gameState == GameState.Catch)
+                throwObjects.ThrowGoodObject();
+            else if (gameState == GameState.Dodge) 
+                throwObjects.ThrowGoodObject();
         }
 
         Debug.Log("Throwing stopped");

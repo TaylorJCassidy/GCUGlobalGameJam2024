@@ -5,7 +5,9 @@ public class ThrowObjects : MonoBehaviour
 {
     // Object Prefabs
     [SerializeField]
-    GameObject[] possibleThrownObjects;
+    GameObject[] possibleBadThrownObjects;
+    [SerializeField]
+    GameObject[] possibleGoodThrownObjects;
 
     [SerializeField]
     [Range(0.1f, 20.0f)]
@@ -29,7 +31,7 @@ public class ThrowObjects : MonoBehaviour
     private void Awake()
     {
         // Error Checking
-        if (possibleThrownObjects.Length == 0)
+        if (possibleBadThrownObjects.Length == 0 || possibleGoodThrownObjects.Length == 0)
             throw new System.Exception(gameObject.name + ": Setup ObjectToThrow on ThrowObjects Script");
         if (possiblePositions == null)
             throw new System.Exception(gameObject.name + ": Setup PossiblePositions on ThrowObjects Script");
@@ -41,25 +43,38 @@ public class ThrowObjects : MonoBehaviour
     {
         // Temp
         if (Input.GetKeyDown(KeyCode.F))
-            ThrowObject();
+            ThrowGoodObject();
     }
-    GameObject PickRandomObject() { return possibleThrownObjects[Random.Range(0, possibleThrownObjects.Length)]; }
-
-    // Throw Multiple Objects
-    public void ThrowObject(int count)
+    GameObject PickRandomObject(GameObject[] gameObjects) { return gameObjects[Random.Range(0, gameObjects.Length)]; }
+    public void ThrowBadObject()
     {
-        for (int i = 0; i < count; i++)
-        {
-            ThrowObject();
-        }
+        ThrowObject(true);
     }
-    public void ThrowObject()
+    public void ThrowGoodObject()
+    {
+        ThrowObject(false);
+    }
+
+    private void ThrowObject(bool badObject)
     {
         // Get Camera Corner Positions
         Vector3 randomPos = GetRandomPointInBounds(bounds);
+        GameObject obj;
+        string tag;
+        if (badObject)
+        {
+            obj = PickRandomObject(possibleBadThrownObjects);
+            tag = "DamagingThrowable";
+        }
+        else
+        {
+            obj = PickRandomObject(possibleGoodThrownObjects);
+            tag = "Throwable";
+        }
 
         // Create object behind camera
-        GameObject newObj = Instantiate(PickRandomObject(), Camera.main.transform.position - Camera.main.transform.forward, Quaternion.identity, null);
+        GameObject newObj = Instantiate(obj, Camera.main.transform.position - Camera.main.transform.forward, Quaternion.identity, null);
+        newObj.tag = tag;
 
         MovingObject objScript = newObj.GetComponent<MovingObject>();
         objScript.Activate(randomPos, throwSpeed, curveHeight);
