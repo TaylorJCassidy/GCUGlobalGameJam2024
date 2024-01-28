@@ -61,10 +61,8 @@ public class ThrowObjects : MonoBehaviour
         // Create object behind camera
         GameObject newObj = Instantiate(PickRandomObject(), Camera.main.transform.position - Camera.main.transform.forward, Quaternion.identity, null);
 
-        // Throw object in direction
-        Vector3 dir = randomPos;
         MovingObject objScript = newObj.GetComponent<MovingObject>();
-        objScript.Activate(dir, throwSpeed, curveHeight);
+        objScript.Activate(randomPos, throwSpeed, curveHeight);
 
         // Random Rotation Speed
         float speedModifier = Random.Range(40.0f, 80.0f);

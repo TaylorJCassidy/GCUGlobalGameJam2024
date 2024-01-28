@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private bool isJokeValid = false;
 
-    enum GameState
+    public enum GameState
     {
         Joke,
         TellingJoke,
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         End
     }
 
-    [SerializeField] GameState gameState = GameState.Joke;
+    public GameState gameState = GameState.Joke;
 
     private void Awake()
     {
@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
 #region Joke Sequence
     void StartJokeSequence()
     {
+        CameraController.cameraController.teleport(1);
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
         tongue.CanUse = false;
@@ -185,28 +186,30 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator DelayedAudienceReaction()
     {
-        yield return new WaitForSeconds(punchLineTimer);
-        audioSource.PlayOneShot(audioClips[2]);
-        yield return new WaitForSeconds(0.5f);
-        //audienceMeter += 10f;
+        CameraController.cameraController.teleport(2);
         if (isJokeValid)
         {
             // clap
-            audioSource.PlayOneShot(audioClips[1]);
+            yield return new WaitForSeconds(punchLineTimer);
+            audioSource.PlayOneShot(audioClips[2]); //drum
+            yield return new WaitForSeconds(0.5f);
+            audioSource.PlayOneShot(audioClips[1]); //clap
             audienceMeter += 10f;
             AddScore(40);
         }
         else
         {
             // boo
-            audioSource.PlayOneShot(audioClips[0]);
+            audioSource.PlayOneShot(audioClips[2]); //drum
+            yield return new WaitForSeconds(0.5f);
+            audioSource.PlayOneShot(audioClips[0]); //boo
+            yield return new WaitForSeconds(1f);
             audienceMeter -= 40f;
         }
         audienceDisplay.value = audienceMeter;
-        isJokeValid = false;
         yield return new WaitForSeconds(2f);
         if (fullJoke != null) Destroy(fullJoke.gameObject);
-        if (audienceMeter > 50f)
+        if (isJokeValid)
         {
             // clap
             gameState = GameState.Catch;
@@ -218,12 +221,14 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Dodge;
             StartDodgeSequence();
         }
+        isJokeValid = false;
         yield break;
     }
 #endregion
 
     void StartDodgeSequence()
     {
+        CameraController.cameraController.teleport(0);
         timeLeft = timeForDodge;
         // Enable movement
         playerMove.CanMove = true;
@@ -233,6 +238,7 @@ public class GameManager : MonoBehaviour
 
     void StartCatchSequence()
     {
+        CameraController.cameraController.teleport(0);
         timeLeft = timeForCatch;
         tongue.CanUse = true;
         throwObjects.ThrowObject(); // Change to good objects only
