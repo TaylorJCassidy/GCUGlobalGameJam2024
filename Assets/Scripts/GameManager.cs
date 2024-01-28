@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
             if (gameState == GameState.Catch)
                 throwObjects.ThrowGoodObject();
             else if (gameState == GameState.Dodge) 
-                throwObjects.ThrowGoodObject();
+                throwObjects.ThrowBadObject();
         }
 
         Debug.Log("Throwing stopped");
