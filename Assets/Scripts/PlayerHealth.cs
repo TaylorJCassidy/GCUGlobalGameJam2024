@@ -14,12 +14,14 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        damage = Mathf.Abs(damage); // prevents negative damage
-        health -= damage;
-        Debug.Log("Player took " + damage + " damage. Health is now " + health);
-        if (health <= 0)
-        {
-            GameManager.instance.EndGame();
+        if (GameManager.instance.gameState == GameManager.GameState.Dodge) {
+            damage = Mathf.Abs(damage); // prevents negative damage
+            health -= damage;
+            Debug.Log("Player took " + damage + " damage. Health is now " + health);
+            if (health <= 0)
+            {
+                GameManager.instance.EndGame();
+            }
         }
     }
 

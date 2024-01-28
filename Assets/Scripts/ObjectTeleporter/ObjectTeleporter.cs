@@ -12,6 +12,15 @@ public class ObjectTeleporter
         this.positions = positions;
         this.rotations = rotations;
         this.gameObject = gameObject;
+        if (positions.Length != rotations.Length) throw new System.Exception("The number of positions and rotations must match");
+    }
+
+    public void Teleport(int idx) {
+        if (idx < 0 || idx > positions.Length) throw new System.Exception("The index provided is greater than the number of positions");
+        gameObject.transform.position = positions[idx];
+        gameObject.transform.rotation = new Quaternion(){
+            eulerAngles = rotations[idx]
+        };
     }
 
     public void Teleport(bool forward) 

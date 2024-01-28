@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private bool isJokeValid = false;
 
-    enum GameState
+    public enum GameState
     {
         Joke,
         TellingJoke,
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         End
     }
 
-    [SerializeField] GameState gameState = GameState.Joke;
+    public GameState gameState = GameState.Joke;
 
     private void Awake()
     {
@@ -185,28 +185,28 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator DelayedAudienceReaction()
     {
-        yield return new WaitForSeconds(punchLineTimer);
-        audioSource.PlayOneShot(audioClips[2]);
-        yield return new WaitForSeconds(0.5f);
-        //audienceMeter += 10f;
         if (isJokeValid)
         {
             // clap
-            audioSource.PlayOneShot(audioClips[1]);
+            yield return new WaitForSeconds(punchLineTimer);
+            audioSource.PlayOneShot(audioClips[2]); //drum
+            yield return new WaitForSeconds(0.5f);
+            audioSource.PlayOneShot(audioClips[1]); //clap
             audienceMeter += 10f;
             AddScore(40);
         }
         else
         {
             // boo
-            audioSource.PlayOneShot(audioClips[0]);
+            audioSource.PlayOneShot(audioClips[2]); //drum
+            yield return new WaitForSeconds(0.5f);
+            audioSource.PlayOneShot(audioClips[0]); //boo
             audienceMeter -= 40f;
         }
         audienceDisplay.value = audienceMeter;
-        isJokeValid = false;
         yield return new WaitForSeconds(2f);
         if (fullJoke != null) Destroy(fullJoke.gameObject);
-        if (audienceMeter > 50f)
+        if (isJokeValid)
         {
             // clap
             gameState = GameState.Catch;
@@ -218,6 +218,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Dodge;
             StartDodgeSequence();
         }
+        isJokeValid = false;
         yield break;
     }
 #endregion
