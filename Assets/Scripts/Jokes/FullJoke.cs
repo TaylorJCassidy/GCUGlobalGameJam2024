@@ -5,6 +5,6 @@ public class FullJoke : MonoBehaviour
 {
     public void setJokeText(string jokeText)
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = jokeText;
+        GetComponentInChildren<TextMeshPro>().text = jokeText;
     }
 }

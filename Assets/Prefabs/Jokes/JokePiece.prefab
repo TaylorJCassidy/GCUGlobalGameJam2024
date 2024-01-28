@@ -454,7 +454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4015912251738714926}
   - component: {fileID: 7311648565094244170}
-  - component: {fileID: 6172560709086918820}
+  - component: {fileID: 121770679360012834}
   m_Layer: 0
   m_Name: JokePiece
   m_TagString: Untagged
@@ -470,7 +470,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973160431648543824}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.23911758, y: 0.36964387, z: -0.09904577, w: -0.8923991}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
@@ -493,15 +493,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867d210dd5aa73f489a69cbea5f2a82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &6172560709086918820
-PolygonCollider2D:
+--- !u!65 &121770679360012834
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973160431648543824}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -510,45 +508,12 @@ PolygonCollider2D:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -5.3415413, y: 1.8618414}
-      - {x: -6.2787027, y: 0.5591564}
-      - {x: -6.352618, y: -1.1863453}
-      - {x: -5.3695908, y: -2.40141}
-      - {x: -1.0498786, y: -3.7343144}
-      - {x: 4.2884407, y: -2.6979992}
-      - {x: 6.4122167, y: -0.6208956}
-      - {x: 6.2578645, y: 1.4700811}
-      - {x: 3.582601, y: 3.2699242}
-      - {x: 0.15828145, y: 3.6625226}
-      - {x: -3.195479, y: 3.0426183}
-  m_UseDelaunayMesh: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12.7522135, y: 7.111749, z: 1}
+  m_Center: {x: -0.056562424, y: 0.05444482, z: 0.000013115177}
 --- !u!1 &6009387632858435011
 GameObject:
   m_ObjectHideFlags: 0
