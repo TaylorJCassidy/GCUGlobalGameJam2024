@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     private bool isJokeValid = false;
 
+    [SerializeField] private Animator[] audienceAnimator;
+
     public enum GameState
     {
         Joke,
@@ -71,6 +73,8 @@ public class GameManager : MonoBehaviour
         audienceDisplay.value = audienceMeter;
 
         audioSource = GetComponent<AudioSource>();
+
+        audienceAnimator = GameObject.Find("Audience").GetComponentsInChildren<Animator>();
     }
 
     void Start()
@@ -139,6 +143,10 @@ public class GameManager : MonoBehaviour
     {
         audioSource.PlayOneShot(audioClips[3]); //paper shuffle
         CameraController.cameraController.teleport(1);
+        foreach (Animator anim in audienceAnimator)
+        {
+            anim.SetBool("Clap", false);
+        }
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
         tongue.CanUse = false;
@@ -207,6 +215,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(punchLineTimer);
             audioSource.PlayOneShot(audioClips[2]); //drum
             yield return new WaitForSeconds(0.5f);
+            foreach (Animator anim in audienceAnimator)
+            {
+                anim.SetBool("Clap", true);
+            }
             audioSource.PlayOneShot(audioClips[1]); //clap
             audienceMeter += 10f;
             AddScore(40);
@@ -216,6 +228,10 @@ public class GameManager : MonoBehaviour
             // boo
             audioSource.PlayOneShot(audioClips[2]); //drum
             yield return new WaitForSeconds(0.5f);
+            foreach (Animator anim in audienceAnimator)
+            {
+                anim.SetBool("Clap", true);
+            }
             audioSource.PlayOneShot(audioClips[0]); //boo
             yield return new WaitForSeconds(1f);
             audienceMeter -= 40f;
