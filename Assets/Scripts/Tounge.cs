@@ -12,6 +12,8 @@ public class Tounge : MonoBehaviour
 
     [SerializeField] private LineRenderer toungeLine;
 
+    private AudioSource audioSource;
+
     // This is the distance the clickable plane is from the camera. Set it in the Inspector before running.
     public float m_DistanceZ;
 
@@ -36,6 +38,7 @@ public class Tounge : MonoBehaviour
 
         // Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
         m_Plane = new Plane(Vector3.forward, m_DistanceFromCamera);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -51,6 +54,8 @@ public class Tounge : MonoBehaviour
     {
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
+        audioSource.PlayOneShot(audioSource.clip);
 
         // If we want to use a plane for general clicking
         float enter = 0.0f;
