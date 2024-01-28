@@ -36,8 +36,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider timerDisplay;
     [SerializeField] private Slider audienceDisplay;
 
+    private AudioSource audioSource;
+    [SerializeField] AudioClip[] audioClips;
 
-    [SerializeField] private List<JokePiece> jokes = new(); // current joke pieces on screen
+
+    private List<JokePiece> jokes = new(); // current joke pieces on screen
     private FullJoke fullJoke; // current full joke on screen
 
     private bool isJokeValid = false;
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
 
         timerDisplay.maxValue = timeForJoke;
         audienceDisplay.value = audienceMeter;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -181,21 +186,25 @@ public class GameManager : MonoBehaviour
     private IEnumerator DelayedAudienceReaction()
     {
         yield return new WaitForSeconds(punchLineTimer);
+        audioSource.PlayOneShot(audioClips[2]);
+        yield return new WaitForSeconds(0.5f);
         //audienceMeter += 10f;
         if (isJokeValid)
         {
             // clap
+            audioSource.PlayOneShot(audioClips[1]);
             audienceMeter += 10f;
             AddScore(40);
         }
         else
         {
             // boo
+            audioSource.PlayOneShot(audioClips[0]);
             audienceMeter -= 40f;
         }
         audienceDisplay.value = audienceMeter;
         isJokeValid = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         if (fullJoke != null) Destroy(fullJoke.gameObject);
         if (audienceMeter > 50f)
         {
