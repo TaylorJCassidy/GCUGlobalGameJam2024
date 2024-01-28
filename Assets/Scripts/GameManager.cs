@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour
         ClearJokes();
 
         fullJoke = jokeController.spawnJokeAndPunchline(punchLineTimer);
+        fullJoke.gameObject.transform.SetParent(finalJokePosition);
         fullJoke.gameObject.transform.position = finalJokePosition.position;
         StartCoroutine(DelayedAudienceReaction());
     }
