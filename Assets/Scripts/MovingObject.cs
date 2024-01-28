@@ -67,14 +67,24 @@ public class MovingObject : MonoBehaviour
         if (!active)
             return;
     }
+
+
     private void OnTriggerEnter(Collider other)
-    {
+    {     
         switch (other.tag)
         {
             case "Player":
                 // Damage Player
+                if (this.tag == "DamagingThrowable")
+                {
+                    other.GetComponent<PlayerHealth>().TakeDamage(1);
+                    Destroy(gameObject);
+                }
                 break;
             case "Throwable":
+                break;
+            case "DamagingThrowable":
+
                 break;
             case "Tongue":
                 break;
@@ -88,17 +98,12 @@ public class MovingObject : MonoBehaviour
 
     IEnumerator MoveTo()
     {
-        GameObject landingPos = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        landingPos.transform.position = endPosition;
-
         float time = 1 / speed;
-        Destroy(landingPos, time);
-
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
             if (!active) yield break;
 
-            Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
+            //Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
             float t = currTime / time;
 
             transform.position = CalculatePointOnCurve(t);      

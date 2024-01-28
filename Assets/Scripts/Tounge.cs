@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tounge : MonoBehaviour
@@ -10,6 +11,8 @@ public class Tounge : MonoBehaviour
     [SerializeField] private Transform toungeEnd;
 
     [SerializeField] private LineRenderer toungeLine;
+
+    private AudioSource audioSource;
 
     // This is the distance the clickable plane is from the camera. Set it in the Inspector before running.
     public float m_DistanceZ;
@@ -22,6 +25,9 @@ public class Tounge : MonoBehaviour
     [SerializeField] private float toungeShootOutSpeed = 0.25f;
     [SerializeField] private float toungeRetractSpeed = 0.25f;
 
+    private bool canUse = true;
+    public bool CanUse { get => canUse; set => canUse = value; }
+
 
     void Start()
     {
@@ -32,12 +38,13 @@ public class Tounge : MonoBehaviour
 
         // Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
         m_Plane = new Plane(Vector3.forward, m_DistanceFromCamera);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && canShoot)
+        if (Input.GetMouseButton(0) && canShoot && canUse)
         {
             ShootTounge();
         }
@@ -47,6 +54,8 @@ public class Tounge : MonoBehaviour
     {
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
+        audioSource.PlayOneShot(audioSource.clip);
 
         // If we want to use a plane for general clicking
         float enter = 0.0f;
@@ -67,7 +76,6 @@ public class Tounge : MonoBehaviour
                 StartCoroutine(ToungeReset());
                 return;
             }
-
         }
 
         if (m_Plane.Raycast(r, out enter))
@@ -84,12 +92,6 @@ public class Tounge : MonoBehaviour
             StartCoroutine(ToungeReset());
 
         }
-
-    }
-
-    void DrawMeshBetween2Points()
-    {
-       
     }
 
     IEnumerator ToungeDraw()
@@ -134,6 +136,7 @@ public class Tounge : MonoBehaviour
             yield return null;
         }
         toungeLine.SetPosition(1, orig);
+        toungeEnd.position = orig;
         if (toungeEnd.childCount > 0)
         {
             Destroy(toungeEnd.GetChild(0).gameObject);
@@ -144,6 +147,9 @@ public class Tounge : MonoBehaviour
 
     IEnumerator ToungeHitObject(RaycastHit hit)
     {
+        Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
+        if (rb != null) rb.isKinematic = true;
+
         yield return new WaitForSeconds(toungeShootOutSpeed);
 
         MovingObject throwObjects = hit.transform.GetComponent<MovingObject>();
@@ -153,6 +159,8 @@ public class Tounge : MonoBehaviour
             throwObjects.Deactivate();
             throwObjects.transform.SetParent(toungeEnd.transform);
             throwObjects.transform.localPosition = Vector3.zero;
+            
+            GameManager.instance.AddScore(10);
         }
 
         yield break;
@@ -171,10 +179,5 @@ public class Tounge : MonoBehaviour
         //draw plane
         Plane p = new Plane(Vector3.forward, m_DistanceFromCamera);
         Gizmos.DrawWireCube(p.ClosestPointOnPlane(transform.position), new Vector3(10, 10, 0.1f));
-    }
-
-    public void SetActive(bool b)
-    {
-        canShoot = b;
     }
 }

@@ -7,11 +7,6 @@ public class ThrowObjects : MonoBehaviour
     [SerializeField]
     GameObject[] possibleThrownObjects;
 
-    // Offset from edges
-    [SerializeField]
-    [Range(0f, .5f)]
-    float offset;
-
     [SerializeField]
     [Range(0.1f, 20.0f)]
     float throwSpeed;
@@ -24,13 +19,23 @@ public class ThrowObjects : MonoBehaviour
     [Range(1.0f, 30.0f)]
     float curveHeight;
 
+    // Can Spawn anywhere in Collider
+    [SerializeField]
+    Collider possiblePositions;
+
+    // Save Bounds so we can Disable Collider
+    Bounds bounds;
+
     private void Awake()
     {
         // Error Checking
         if (possibleThrownObjects.Length == 0)
-        {
             throw new System.Exception(gameObject.name + ": Setup ObjectToThrow on ThrowObjects Script");
-        }
+        if (possiblePositions == null)
+            throw new System.Exception(gameObject.name + ": Setup PossiblePositions on ThrowObjects Script");
+
+        bounds = possiblePositions.bounds;
+        possiblePositions.enabled = false;
     }
     private void Update()
     {
@@ -41,17 +46,17 @@ public class ThrowObjects : MonoBehaviour
     GameObject PickRandomObject() { return possibleThrownObjects[Random.Range(0, possibleThrownObjects.Length)]; }
 
     // Throw Multiple Objects
-    void ThrowObject(int count)
+    public void ThrowObject(int count)
     {
         for (int i = 0; i < count; i++)
         {
             ThrowObject();
         }
     }
-    void ThrowObject()
+    public void ThrowObject()
     {
         // Get Camera Corner Positions
-        Vector3 randomPos = GetRandomPositionWithinFrustum(Camera.main);
+        Vector3 randomPos = GetRandomPointInBounds(bounds);
 
         // Create object behind camera
         GameObject newObj = Instantiate(PickRandomObject(), Camera.main.transform.position - Camera.main.transform.forward, Quaternion.identity, null);
@@ -69,7 +74,18 @@ public class ThrowObjects : MonoBehaviour
     }
 
 
-    Vector3 GetRandomPositionWithinFrustum(Camera camera)
+
+    public static Vector3 GetRandomPointInBounds(Bounds bounds)
+    {
+        return new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            Random.Range(bounds.min.z, bounds.max.z)
+        );
+    }
+
+    /* Not in Use but keeping incase need */
+/*    Vector3 GetRandomPositionWithinFrustum(Camera camera)
     {
         // Get the camera's viewport
         Rect viewportRect = camera.rect;
@@ -89,5 +105,5 @@ public class ThrowObjects : MonoBehaviour
         Vector3 randomPosition = camera.ScreenToWorldPoint(new Vector3(randomX, randomY, randomZ));
 
         return randomPosition;
-    }
+    }*/
 }

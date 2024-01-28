@@ -13,6 +13,9 @@ public class JokeController : MonoBehaviour
     private List<JokePiece> correctJokePieces = new();
     private List<JokePiece> selectedJokePieces = new();
 
+    private float punchlineTimer = -1f;
+    private FullJoke fullJoke;
+
     private static JokeController jokeController;
 
     public static JokeController GetJokeController() {
@@ -20,10 +23,22 @@ public class JokeController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         jokeController = this;
         jokes = getAllJokes();
+    }
+
+    void Update()
+    {
+        //change fulljoke text to punchline after timer has passed
+        if (punchlineTimer > 0f) {
+            punchlineTimer -= Time.deltaTime;
+            if (punchlineTimer <= 0f) {
+                punchlineTimer = -1f;
+                fullJoke.setJokeText(chosenJoke.punchline);
+            }
+        }
     }
 
     public bool addSelectedJoke(JokePiece jokePiece)
@@ -63,20 +78,16 @@ public class JokeController : MonoBehaviour
         return selectedJokePieces.SequenceEqual(correctJokePieces);
     }
 
-    FullJoke spawnFullJoke() 
+    public FullJoke spawnJokeAndPunchline(float punchlineTimer) 
     {
-        FullJoke joke = Instantiate(fullJokePrefab);
-        joke.setJokeText(getCompleteJoke());
-        joke.name = "Full Joke";
-        return joke;
+        fullJoke = Instantiate(fullJokePrefab);
+        fullJoke.setJokeText(chosenJoke.joke);
+        fullJoke.name = "Full Joke";
+        this.punchlineTimer = punchlineTimer;
+        return fullJoke;
     }
 
-    string getCompleteJoke()
-    {
-        return chosenJoke.jokeContent.Aggregate("", (prev, curr) => prev + " " + curr);
-    }
-
-    public List<JokePiece> spawnJokes()
+    public List<JokePiece> spawnJokePieces()
     {
         chosenJoke = jokes[Random.Range(0, jokes.Count)];
         List<JokePiece> jokePieces = createCorrectJokePieces(chosenJoke);
@@ -86,7 +97,7 @@ public class JokeController : MonoBehaviour
     }
 
     List<JokePiece> createCorrectJokePieces(Joke chosenJoke) {
-        List<JokePiece> jokePieces = chosenJoke.jokeContent.Select(joke => {
+        List<JokePiece> jokePieces = chosenJoke.jokeKeywords.Select(joke => {
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Real Joke Compontent";
             jokePiece.setJokeText(joke);
@@ -116,7 +127,7 @@ public class JokeController : MonoBehaviour
 
             JokePiece jokePiece = Instantiate(jokePrefab);
             jokePiece.name = "Fake Joke Compontent";
-            jokePiece.setJokeText(chosenJoke.jokeContent[Random.Range(0, chosenJoke.jokeContent.Length)]);
+            jokePiece.setJokeText(chosenJoke.jokeKeywords[Random.Range(0, chosenJoke.jokeKeywords.Length)]);
             jokePiece.setStartConnector(JokeConnector.GetRandomJokeConnector());
             jokePiece.setEndConnector(JokeConnector.GetRandomJokeConnector());
 
@@ -124,4 +135,13 @@ public class JokeController : MonoBehaviour
         }
         return jokePieces;
     }
+
+
+    public void ResetJokes() //
+    {
+        correctJokePieces.Clear();
+        selectedJokePieces.Clear();
+        //Destroy(fullJoke.gameObject);
+    }
+
 }

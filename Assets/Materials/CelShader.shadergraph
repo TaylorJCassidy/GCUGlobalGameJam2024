@@ -89,6 +89,9 @@
         },
         {
             "m_Id": "07d88783170a49a6ba8d610b16b50de3"
+        },
+        {
+            "m_Id": "3c801ac40f4a4890b5ac31e0699a3155"
         }
     ],
     "m_GroupDatas": [
@@ -100,6 +103,9 @@
         },
         {
             "m_Id": "d4b2153719ac49f8a2349cd39bd3f80f"
+        },
+        {
+            "m_Id": "1847806482124391b3efa02b3e643205"
         }
     ],
     "m_StickyNoteDatas": [],
@@ -121,15 +127,15 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "28e365c2086349c382033c8edbebc042"
+                    "m_Id": "3c801ac40f4a4890b5ac31e0699a3155"
                 },
                 "m_SlotId": 2
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "85c950d47038403faa4e9ed15240fce5"
+                    "m_Id": "28e365c2086349c382033c8edbebc042"
                 },
-                "m_SlotId": 2
+                "m_SlotId": 1
             }
         },
         {
@@ -295,9 +301,9 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "28e365c2086349c382033c8edbebc042"
+                    "m_Id": "85c950d47038403faa4e9ed15240fce5"
                 },
-                "m_SlotId": 0
+                "m_SlotId": 2
             }
         },
         {
@@ -309,7 +315,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "28e365c2086349c382033c8edbebc042"
+                    "m_Id": "3c801ac40f4a4890b5ac31e0699a3155"
                 },
                 "m_SlotId": 1
             }
@@ -471,17 +477,17 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1Node",
     "m_ObjectId": "07d88783170a49a6ba8d610b16b50de3",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "1847806482124391b3efa02b3e643205"
     },
     "m_Name": "Float",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2216.865234375,
-            "y": 434.6280212402344,
-            "width": 0.0,
-            "height": 0.0
+            "x": -2375.5,
+            "y": 877.0,
+            "width": 125.5,
+            "height": 77.0
         }
     },
     "m_Slots": [
@@ -768,6 +774,17 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GroupData",
+    "m_ObjectId": "1847806482124391b3efa02b3e643205",
+    "m_Title": "Buggy RN",
+    "m_Position": {
+        "x": 10.0,
+        "y": 10.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "18a4e69296ae4b9cbce5f75eb6e0325e",
     "m_Id": 1,
@@ -911,17 +928,17 @@
     "m_Type": "UnityEditor.ShaderGraph.MaximumNode",
     "m_ObjectId": "28e365c2086349c382033c8edbebc042",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "1847806482124391b3efa02b3e643205"
     },
     "m_Name": "Maximum",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1238.4998779296875,
-            "y": -108.5,
-            "width": 208.0,
-            "height": 302.0
+            "x": -1397.0001220703125,
+            "y": 334.0,
+            "width": 208.0001220703125,
+            "height": 302.00006103515627
         }
     },
     "m_Slots": [
@@ -977,6 +994,30 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "38d07f5ddfb943f1857efac69fc5943c",
+    "m_Id": 0,
+    "m_DisplayName": "Edge",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Edge",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.75,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 1.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "3a271f58a57e4522b192a99108295458",
     "m_Id": 5,
@@ -988,6 +1029,45 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StepNode",
+    "m_ObjectId": "3c801ac40f4a4890b5ac31e0699a3155",
+    "m_Group": {
+        "m_Id": "1847806482124391b3efa02b3e643205"
+    },
+    "m_Name": "Step",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1620.5,
+            "y": 610.5000610351563,
+            "width": 207.9998779296875,
+            "height": 301.99993896484377
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "38d07f5ddfb943f1857efac69fc5943c"
+        },
+        {
+            "m_Id": "f3246567747d45e9bf692d98f054535a"
+        },
+        {
+            "m_Id": "4b6366e76ee8496da9820f841129f2b1"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    }
 }
 
 {
@@ -1075,6 +1155,30 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "4b6366e76ee8496da9820f841129f2b1",
+    "m_Id": 2,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "4cdf6d0557c9458eb3980074d496aff7",
     "m_Id": 0,
@@ -1102,17 +1206,17 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1Node",
     "m_ObjectId": "4d2bef6e09e149ee854f9330b85f6785",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "1847806482124391b3efa02b3e643205"
     },
     "m_Name": "Float",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2003.3115234375,
-            "y": 339.9193420410156,
-            "width": 0.0,
-            "height": 0.0
+            "x": -2162.0,
+            "y": 782.5000610351563,
+            "width": 125.4998779296875,
+            "height": 76.99993896484375
         }
     },
     "m_Slots": [
@@ -2731,6 +2835,30 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "f3246567747d45e9bf692d98f054535a",
+    "m_Id": 1,
+    "m_DisplayName": "In",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "In",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "f497a69ed48347fabadce5070e30b2ac",
     "m_Title": "Invert",
@@ -2745,16 +2873,16 @@
     "m_Type": "UnityEditor.ShaderGraph.FresnelNode",
     "m_ObjectId": "f73589b364f5493791c57cf4890999eb",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "1847806482124391b3efa02b3e643205"
     },
     "m_Name": "Fresnel Effect",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1780.0,
-            "y": 286.0,
-            "width": 208.0,
+            "x": -1938.5001220703125,
+            "y": 728.5000610351563,
+            "width": 208.0001220703125,
             "height": 325.99993896484377
         }
     },
@@ -2817,9 +2945,9 @@
     },
     "m_Color": {
         "color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 0.0,
+            "r": 0.4716981053352356,
+            "g": 0.38492345809936526,
+            "b": 0.38492345809936526,
             "a": 0.0
         },
         "mode": 0
