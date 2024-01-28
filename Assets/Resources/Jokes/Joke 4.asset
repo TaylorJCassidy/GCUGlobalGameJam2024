@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
   m_Name: Joke 4
   m_EditorClassIdentifier: 
-  fullJoke: What kind of music do sophisticated frogs listen to? Hopera
+  joke: What kind of music do sophisticated frogs listen to?
+  punchline: Hopera
   jokeKeywords:
   - Frogs
   - Listen to

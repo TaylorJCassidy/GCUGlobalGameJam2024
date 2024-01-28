@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
   m_Name: Joke 6
   m_EditorClassIdentifier: 
-  fullJoke: What happens to illegally parked frogs? They get toad
+  joke: What happens to illegally parked frogs?
+  punchline: They get toad
   jokeKeywords:
   - Illegally parked
   - Frogs

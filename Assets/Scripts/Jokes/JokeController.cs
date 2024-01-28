@@ -13,6 +13,9 @@ public class JokeController : MonoBehaviour
     private List<JokePiece> correctJokePieces = new();
     private List<JokePiece> selectedJokePieces = new();
 
+    private float punchlineTimer = -1f;
+    private FullJoke fullJoke;
+
     private static JokeController jokeController;
 
     public static JokeController GetJokeController() {
@@ -24,6 +27,22 @@ public class JokeController : MonoBehaviour
     {
         jokeController = this;
         jokes = getAllJokes();
+        chosenJoke = jokes[Random.Range(0, jokes.Count)];
+
+        spawnJokePieces();
+        spawnJokeAndPunchline();
+    }
+
+    void Update()
+    {
+        //change fulljoke text to punchline after timer has passed
+        if (punchlineTimer > 0f) {
+            punchlineTimer -= Time.deltaTime;
+            if (punchlineTimer <= 0f) {
+                punchlineTimer = -1f;
+                fullJoke.setJokeText(chosenJoke.punchline);
+            }
+        }
     }
 
     public bool addSelectedJoke(JokePiece jokePiece)
@@ -63,17 +82,17 @@ public class JokeController : MonoBehaviour
         return selectedJokePieces.SequenceEqual(correctJokePieces);
     }
 
-    FullJoke spawnFullJoke() 
+    public FullJoke spawnJokeAndPunchline() 
     {
-        FullJoke joke = Instantiate(fullJokePrefab);
-        joke.setJokeText(chosenJoke.fullJoke);
-        joke.name = "Full Joke";
-        return joke;
+        fullJoke = Instantiate(fullJokePrefab);
+        fullJoke.setJokeText(chosenJoke.joke);
+        fullJoke.name = "Full Joke";
+        punchlineTimer = 10f;
+        return fullJoke;
     }
 
-    public List<JokePiece> spawnJokes()
+    public List<JokePiece> spawnJokePieces()
     {
-        chosenJoke = jokes[Random.Range(0, jokes.Count)];
         List<JokePiece> jokePieces = createCorrectJokePieces(chosenJoke);
         correctJokePieces.AddRange(jokePieces);
         jokePieces.AddRange(createOtherRandomJokePieces(jokes.Where(joke => joke != chosenJoke).ToList()));
