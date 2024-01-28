@@ -131,6 +131,7 @@ public class Tounge : MonoBehaviour
             yield return null;
         }
         toungeLine.SetPosition(1, orig);
+        toungeEnd.position = orig;
         if (toungeEnd.childCount > 0)
         {
             Destroy(toungeEnd.GetChild(0).gameObject);
