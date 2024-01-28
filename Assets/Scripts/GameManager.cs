@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
 #region Joke Sequence
     void StartJokeSequence()
     {
+        CameraController.cameraController.teleport(1);
         timeLeft = timeForJoke;
         playerMove.CanMove = false;
         tongue.CanUse = false;
@@ -185,6 +186,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator DelayedAudienceReaction()
     {
+        CameraController.cameraController.teleport(2);
         if (isJokeValid)
         {
             // clap
@@ -201,6 +203,7 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(audioClips[2]); //drum
             yield return new WaitForSeconds(0.5f);
             audioSource.PlayOneShot(audioClips[0]); //boo
+            yield return new WaitForSeconds(1f);
             audienceMeter -= 40f;
         }
         audienceDisplay.value = audienceMeter;
@@ -225,6 +228,7 @@ public class GameManager : MonoBehaviour
 
     void StartDodgeSequence()
     {
+        CameraController.cameraController.teleport(0);
         timeLeft = timeForDodge;
         // Enable movement
         playerMove.CanMove = true;
@@ -234,6 +238,7 @@ public class GameManager : MonoBehaviour
 
     void StartCatchSequence()
     {
+        CameraController.cameraController.teleport(0);
         timeLeft = timeForCatch;
         tongue.CanUse = true;
         throwObjects.ThrowObject(); // Change to good objects only
