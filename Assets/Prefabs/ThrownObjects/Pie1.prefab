@@ -331,6 +331,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3150529149017864943}
     m_Modifications:
+    - target: {fileID: 907476062400174516, guid: 1d07b7218057b5c448a81527a28b9ce8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 19c68ec1d61e31c438be23dea05eea21, type: 2}
     - target: {fileID: 1700386879060834401, guid: 1d07b7218057b5c448a81527a28b9ce8, type: 3}
       propertyPath: m_Name
       value: cream_pie
