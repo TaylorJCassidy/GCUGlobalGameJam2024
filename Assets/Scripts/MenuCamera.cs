@@ -7,7 +7,8 @@ public class MenuCamera : MonoBehaviour
     public Transform followTransform;
     public float rotationSpeed = 2.0f;
     public float rotationTime = 30f ;
-
+    public Vector3 transformOffset;
+    public float offsetAmount = 1.0f;
 
     private Vector3 cameraOffset;
     [Range(0.01f, 1.0f)]

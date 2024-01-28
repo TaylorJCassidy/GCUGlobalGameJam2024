@@ -14,7 +14,8 @@ public class MovingObject : MonoBehaviour
     Vector3 endPosition = Vector3.negativeInfinity;
     float speed;
     bool active = false;
-
+    bool falling = false;
+    Vector3 finalDirection;
     [SerializeField]
     VisualEffect vfx;
     
@@ -66,6 +67,9 @@ public class MovingObject : MonoBehaviour
         // Not Active
         if (!active)
             return;
+
+        if (falling)
+            transform.position += finalDirection * speed;
     }
 
 
@@ -89,15 +93,22 @@ public class MovingObject : MonoBehaviour
             case "Tongue":
                 break;
             default:
-                Destroy(Instantiate(vfx, transform.position, Quaternion.identity, null), 2.0f);
+                CleanUp();
                 Destroy(gameObject);
                 break;
         }
         Debug.Log(gameObject.name + " Hit: " + other.name);
     }
-
+    GameObject decal;
+    void CleanUp()
+    {
+        Destroy(decal);
+        Destroy(Instantiate(vfx, transform.position, Quaternion.identity, null), 2.0f);
+    }
     IEnumerator MoveTo()
     {
+        decal = SpawnDecal(endPosition);
+
         float time = 1 / speed;
         for (float currTime = 0; currTime < time; currTime += Time.deltaTime)
         {
@@ -112,5 +123,28 @@ public class MovingObject : MonoBehaviour
         }
 
         transform.position = endPosition;
+
+        falling = true;
+        finalDirection = Vector3.Normalize(endPosition - CalculatePointOnCurve(0.9f));
+    }
+
+    [SerializeField]
+    GameObject projectileDecalPrefab;
+    [SerializeField]
+    LayerMask layerMask;
+    GameObject SpawnDecal(Vector3 pos)
+    {
+        // Shoot ray from camera to position (Ignore player)
+        RaycastHit hit;
+        Vector3 origin = Camera.main.transform.position;
+        Vector3 dir = Vector3.Normalize(pos - origin);
+        if (Physics.Raycast(origin, dir, out hit, 10000.0f, layerMask))
+        {
+            Debug.Log("Hit " + hit.transform.gameObject.name);
+            // Place object perpindicular to normal
+            // Get rotation from normal
+            return Instantiate(projectileDecalPrefab, hit.point, Quaternion.identity, null);
+        }
+        return null;
     }
 }
