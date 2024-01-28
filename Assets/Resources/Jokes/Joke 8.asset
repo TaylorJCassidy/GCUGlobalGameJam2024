@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597c5f29e6259084c86092f322ae362f, type: 3}
   m_Name: Joke 8
   m_EditorClassIdentifier: 
-  fullJoke: Why are frogs so happy? They eat whatever bugs them
+  joke: Why are frogs so happy?
+  punchline: They eat whatever bugs them
   jokeKeywords:
   - Happy Frogs
   - Eat
