@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tounge : MonoBehaviour
@@ -22,6 +23,9 @@ public class Tounge : MonoBehaviour
     [SerializeField] private float toungeShootOutSpeed = 0.25f;
     [SerializeField] private float toungeRetractSpeed = 0.25f;
 
+    private bool canUse = true;
+    public bool CanUse { get => canUse; set => canUse = value; }
+
 
     void Start()
     {
@@ -37,7 +41,7 @@ public class Tounge : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && canShoot)
+        if (Input.GetMouseButton(0) && canShoot && canUse)
         {
             ShootTounge();
         }
@@ -169,10 +173,5 @@ public class Tounge : MonoBehaviour
         //draw plane
         Plane p = new Plane(Vector3.forward, m_DistanceFromCamera);
         Gizmos.DrawWireCube(p.ClosestPointOnPlane(transform.position), new Vector3(10, 10, 0.1f));
-    }
-
-    public void SetActive(bool b)
-    {
-        canShoot = b;
     }
 }
