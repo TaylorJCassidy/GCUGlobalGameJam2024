@@ -23,7 +23,7 @@ public class JokeController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         jokeController = this;
         jokes = getAllJokes();
@@ -135,4 +135,13 @@ public class JokeController : MonoBehaviour
         }
         return jokePieces;
     }
+
+
+    public void ResetJokes() //
+    {
+        correctJokePieces.Clear();
+        selectedJokePieces.Clear();
+        //Destroy(fullJoke.gameObject);
+    }
+
 }

@@ -46,14 +46,14 @@ public class ThrowObjects : MonoBehaviour
     GameObject PickRandomObject() { return possibleThrownObjects[Random.Range(0, possibleThrownObjects.Length)]; }
 
     // Throw Multiple Objects
-    void ThrowObject(int count)
+    public void ThrowObject(int count)
     {
         for (int i = 0; i < count; i++)
         {
             ThrowObject();
         }
     }
-    void ThrowObject()
+    public void ThrowObject()
     {
         // Get Camera Corner Positions
         Vector3 randomPos = GetRandomPointInBounds(bounds);
