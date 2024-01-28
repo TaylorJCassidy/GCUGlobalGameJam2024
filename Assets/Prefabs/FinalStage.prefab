@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 2459528939581592698}
   - component: {fileID: 6377375057822069512}
   - component: {fileID: 4251350562050271726}
+  - component: {fileID: 7613662898254528796}
   m_Layer: 0
   m_Name: Curtain
   m_TagString: Untagged
@@ -874,5 +875,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5923179728750226771, guid: bd278a4d71866ef468c63838294f9196, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7613662898254528796}
   m_SourcePrefab: {fileID: 100100000, guid: bd278a4d71866ef468c63838294f9196, type: 3}
+--- !u!65 &7613662898254528796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246337188287897396}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.401385, y: 5.1192784, z: 0.3189574}
+  m_Center: {x: -3.64214, y: -0.004461527, z: -0.2198408}
