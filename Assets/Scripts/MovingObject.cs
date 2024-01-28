@@ -95,7 +95,7 @@ public class MovingObject : MonoBehaviour
         {
             if (!active) yield break;
 
-            Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
+            //Debug.Log("Start is: " + startPosition + ", Middle is: " + middlePosition + " Final Point is: " + endPosition);
             float t = currTime / time;
 
             transform.position = CalculatePointOnCurve(t);      

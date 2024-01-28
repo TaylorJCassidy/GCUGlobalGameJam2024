@@ -67,7 +67,6 @@ public class Tounge : MonoBehaviour
                 StartCoroutine(ToungeReset());
                 return;
             }
-
         }
 
         if (m_Plane.Raycast(r, out enter))
@@ -84,12 +83,6 @@ public class Tounge : MonoBehaviour
             StartCoroutine(ToungeReset());
 
         }
-
-    }
-
-    void DrawMeshBetween2Points()
-    {
-       
     }
 
     IEnumerator ToungeDraw()
@@ -156,6 +149,8 @@ public class Tounge : MonoBehaviour
             throwObjects.Deactivate();
             throwObjects.transform.SetParent(toungeEnd.transform);
             throwObjects.transform.localPosition = Vector3.zero;
+            
+            GameManager.instance.AddScore();
         }
 
         yield break;
